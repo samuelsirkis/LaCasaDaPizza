@@ -5,17 +5,18 @@
 
 
 
-void head();
+void head(); void menu();
 
 int main() {
+	setlocale(LC_ALL, "");
 	system("color 4b");
 inicio:
 	system("cls");
 
 	head();
 
-
-
+	menu();
+	
 
 
 
@@ -42,6 +43,8 @@ void menu() {
 	puts("\n\t\t\t | 1 - CADASTRO DE USUÁRIO *");
 	puts("\n=====================================================================================================");
 	puts("\n\t\t\t | 2 - CADASTRO DE CLIENTE ");
+	puts("\n=====================================================================================================");
+
 }
 
 void gotxy(int coluna, int linha) {
