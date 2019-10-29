@@ -17,7 +17,7 @@ inicio:
 
 	menu();
 	
-
+	printf("Olá Mundo");
 
 
 
