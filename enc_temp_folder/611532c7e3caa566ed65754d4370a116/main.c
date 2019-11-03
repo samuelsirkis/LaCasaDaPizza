@@ -346,13 +346,7 @@ tela_inicial_user:
 			goto tela_inicial_user;
 		}
 	}
-	else if(op_user ==2){}
-	else if (op_user == 3) {}
-	else if (op_user == 4) {}
-	else if (op_user == 5) {}
-	else if (op_user == 6) {}
-	else if (op_user == 7) {}
-	else if (op_user == 8) {}
+
 	else if (op_user == 9) { system("cls"); menu_login_inicial(); }
 	else if (op_user == 0) exit(0);
 	else { system("cls"); printf("\n\tOpcao Invalida\n"); goto tela_inicial_user; }
