@@ -14,6 +14,7 @@ void menu_login_inicial();
 void login_usuario();
 void dataHora();
 
+
 struct cliente {
 	char nome[100];
 	char telefone[9];
@@ -21,9 +22,18 @@ struct cliente {
 	int codigo_cliente;
 }cliente[1000], cadastro_cliente[1000];
 
+struct pedido {
+	struct cliente cliente_pedido;
+	struct bebidas cliente_bebida;
+	struct sabor cliente_sabor;
+	int codigo_pedido;
+	float valor_pedido;
+
+}pedido[1000],cadastro_pedido[1000];
+
 struct bebidas {
 	char bebida[20];
-	int qunatidade_bebida;
+	int quantidade_bebida;
 	int codigo_bebiba;
 	float preco_bebida;
 
@@ -39,6 +49,8 @@ struct ingredientes {
 struct sabor {
 	char sabor[30];
 	char ingredientes[50];
+	int tamanho_sabor;
+	int quantidade_sabor;
 	int codigo_sabor;
 	float preco_sabor;
 }sabores[50];
@@ -200,6 +212,47 @@ admin_existente:
 	}
 }
 
+void cadastro_pedidos(int a) {
+	int i, j;
+	system("cls");
+pedido_existente:
+	pedido[a].codigo_pedido = a + 1;
+	head();
+	puts("\t=================================");
+	printf("\n\tCadastro de pedido n.º: %d\n", pedido[a].codigo_pedido);
+	puts("\t=================================");
+	puts("\n\n\tDigite o número de telefone do cliente: ");
+	printf("\t");
+	scanf(" %s", cadastro_pedido[a].cliente_pedido.telefone);
+	for (j = 0; j < 1000; j++)
+	{
+		i = validar_cliente(a, j);
+		if (i == 0) break;
+	}
+	if (i == 0)
+	{
+		memcpy(pedido[a].cliente_pedido.telefone, cadastro_pedido[a].cliente_pedido.telefone, 9);
+		//tentar imprimir o cadastro do cliente na tela
+		//solicitar informações do pedido
+		//concluir pedido e informar valor total
+		//criar menu com opções de pedido
+
+		puts("\tInforme a quantidade de sabores: ");
+		printf("\t");
+		scanf(" %d", cadastro_pedido[a].cliente_sabor.sabor);
+		printf("\n\tQuais sabores: ");
+		printf("\t");
+		scanf(" %d", cadastro_pedido[a].cliente_bebida.bebida);
+	}
+
+	else if (i == 1)
+	{
+		system("cls");
+		printf("\nBebida ja existente!\n");
+		goto pedido_existente;
+	}
+}
+
 void cadastro_bebidas(int a) {
 	int i, j;
 	system("cls");
@@ -222,10 +275,10 @@ bebida_existente:
 		memcpy(bebidas[a].bebida, cadastro_bebida[a].bebida, 20);
 		puts("\tInforme a quantidade de bebidas: ");
 		printf("\t");
-		scanf(" %d", cadastro_bebida[a].qunatidade_bebida);
+		scanf(" %d", cadastro_bebida[a].quantidade_bebida);
 		printf("\n\tQual o preço de venda da bebida: ");
 		printf("\t");
-		scanf(" %d", cadastro_bebida[a].preco_bebida);
+		scanf(" %f", cadastro_bebida[a].preco_bebida);
 	}
 
 	else if (i == 1)
@@ -346,7 +399,34 @@ tela_inicial_user:
 			goto tela_inicial_user;
 		}
 	}
-	else if(op_user ==2){}
+	else if(op_user ==2){
+		system("cls");
+		head();
+		puts("\t=================================");
+		printf("\n\tQuantos pedidos deseja fazer? \n");
+		puts("\t=================================");
+		printf("\t");
+		scanf("%d", &nc);
+		if (a == 0)
+		{
+			for (a = 0; a < nc; a++)
+			{
+				cadastro_pedidos(a);
+			}
+			goto tela_inicial_user;
+		}
+		else if (a != 0)
+		{
+			b = a;
+			c = a + nc - 1;
+			printf("\n%d\n", a);
+			for (a = b; a <= c; a++)
+			{
+				cadastro_pedidos(a);
+			}
+			goto tela_inicial_user;
+		}
+	}
 	else if (op_user == 3) {}
 	else if (op_user == 4) {}
 	else if (op_user == 5) {}
@@ -570,10 +650,14 @@ void dataHora() {
 
 }
 
+//void gotoxy(int coluna, int linha) {
+//	COORD point;
+//	point.X = coluna;
+//	point.Y = linha;
+//	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+//}
 
-// void menu(); void dataHora();
-//
-//
+
 //struct user {
 //	char nome[100];
 //	int pass[6];
