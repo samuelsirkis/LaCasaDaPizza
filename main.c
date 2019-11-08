@@ -13,6 +13,7 @@ void login_adm();
 void menu_login_inicial();
 void login_usuario();
 void dataHora();
+void logar_cliente();
 
 
 struct cliente {
@@ -22,10 +23,12 @@ struct cliente {
 	char bairro[50];
 	char cidade[50];
 	char cep[9];
+	char sugestao[200];
+	char senha[10];
 	int codigo_cliente;
-}cliente[1000], cadastro_cliente[1000];
+}clientes[1000], cad_clientes[1000];
 
-struct bebidas {
+struct bebida {
 	char bebida[20];
 	int quantidade_bebida;
 	int codigo_bebiba;
@@ -33,21 +36,21 @@ struct bebidas {
 
 }bebidas[200], cadastro_bebida[200];
 
-struct ingredientes {
+struct ingrediente {
 	char ingrediente[50];
 	int quantidade_ingredientes;
 	int codigo_ingrediente;
 	float preco_ingrediented;
 };
 
-struct sabor {
+struct pizza {
 	char sabor[30];
 	char ingredientes[50];
 	int tamanho_sabor;
 	int quantidade_sabor;
 	int codigo_sabor;
 	float preco_sabor;
-}sabores[50];
+}pizzas[50];
 
 struct cadastro {
 	char user[20];
@@ -57,8 +60,8 @@ struct cadastro {
 
 struct pedido {
 	struct cliente cliente_pedido;
-	struct bebidas cliente_bebida;
-	struct sabor cliente_sabor;
+	struct bebida cliente_bebida;
+	struct pizza cliente_pizza;
 	int codigo_pedido;
 	float valor_pedido;
 
@@ -92,7 +95,7 @@ int validar_cliente(int a, int c)
 {
 	int r;
 
-	if (strcmp(cadastro_cliente[a].telefone, cliente[c].telefone) == 0)
+	if (strcmp(cad_clientes[a].telefone, clientes[c].telefone) == 0)
 	{
 		r = 1; //cliente ja existe
 	}
@@ -150,14 +153,14 @@ void cadastro_clientes(int a)
 	int b, c;
 	system("cls");
 cliente_existente:
-	cliente[a].codigo_cliente = a + 1;
+	clientes[a].codigo_cliente = a + 1;
 	head();
 	puts("\t=================================");
-	printf("\n\tCadastro %d\n", cliente[a].codigo_cliente);
+	printf("\n\tCadastro %d\n", clientes[a].codigo_cliente);
 	puts("\t=================================");
 	puts("\n\n\tDigite o Telefone do Cliente: ");
 	printf("\t");
-	scanf(" %s", cadastro_cliente[a].telefone);
+	scanf(" %s", cad_clientes[a].telefone);
 	for (c = 0; c < 1000; c++)
 	{
 		b = validar_cliente(a, c);
@@ -165,22 +168,22 @@ cliente_existente:
 	}
 	if (b == 0)
 	{
-		memcpy(cliente[a].telefone, cadastro_cliente[a].telefone, 9);
+		memcpy(clientes[a].telefone, cad_clientes[a].telefone, 9);
 		puts("\tInforme o nome do cliente: ");
 		printf("\t");
-		scanf(" %[^\n]s", cadastro_cliente[a].nome);
+		scanf(" %[^\n]s", cad_clientes[a].nome);
 		printf("\n\tEndereço Cliente: ");
 		printf("\t");
-		scanf(" %[^\n]s", cadastro_cliente[a].endereco);
+		scanf(" %[^\n]s", cad_clientes[a].endereco);
 		printf("\n\tBairro do Cliente: ");
 		printf("\t");
-		scanf(" %[^\n]s", cadastro_cliente[a].bairro);
+		scanf(" %[^\n]s", cad_clientes[a].bairro);
 		printf("\n\tCidade do Cliente: ");
 		printf("\t");
-		scanf(" %[^\n]s", cadastro_cliente[a].cidade);
-		printf("\n\CEP do Cliente: ");
+		scanf(" %[^\n]s", cad_clientes[a].cidade);
+		printf("\n\tCEP do Cliente: ");
 		printf("\t");
-		scanf(" %[^\n]s", cadastro_cliente[a].cep);
+		scanf(" %[^\n]s", cad_clientes[a].cep);
 	}
 
 	else if (b == 1)
@@ -225,7 +228,7 @@ admin_existente:
 }
 
 void cadastro_pedidos(int a) {
-	int i, j;
+	/*int i, j;
 	system("cls");
 pedido_existente:
 	pedido[a].codigo_pedido = a + 1;
@@ -243,14 +246,14 @@ pedido_existente:
 	}
 	if (i == 0)
 	{
-		memcpy(pedido[a].cliente_pedido.telefone, cadastro_pedido[a].cliente_pedido.telefone, 9);
+		memcpy(pedido[a].cliente_pedido.telefone, cadastro_pedido[a].cliente_pedido.telefone, 9);*/
 		//tentar imprimir o cadastro do cliente na tela
 		//criar menu com opções de pedido
 		//solicitar informações do pedido
 		//concluir pedido e informar valor total
 		
 
-		puts("\tInforme a quantidade de sabores: ");
+	/*	puts("\tInforme a quantidade de sabores: ");
 		printf("\t");
 		scanf(" %d", cadastro_pedido[a].cliente_sabor.sabor);
 		printf("\n\tQuais sabores: ");
@@ -263,7 +266,7 @@ pedido_existente:
 		system("cls");
 		printf("\nBebida ja existente!\n");
 		goto pedido_existente;
-	}
+	}*/
 }
 
 void cadastro_bebidas(int a) {
@@ -302,11 +305,46 @@ bebida_existente:
 	}
 }
 
-void cadastro_sabores() {
+void cadastro_pizzas() {
 
 }
 
-void cadastro_pizzaiolos() {
+void cadastro_sugestao(int a){
+	int i, j;
+	system("cls");
+sugestao_existe:
+	clientes[a].codigo_cliente = a + 1;
+	head();
+	puts("\t=================================");
+	printf("\n\tCadastro %d\n", clientes[a].codigo_cliente);
+	puts("\t=================================");
+	puts("\n\n\tDigite seu telefone: ");
+	printf("\t");
+	scanf(" %s", cad_clientes[a].telefone);
+	for (j = 0; j < 1000; j++)
+	{
+		i = validar_cliente(a, j);
+		if (i == 1) break;
+	}
+	if (i == 1)
+	{
+		memcpy(clientes[a].telefone, cad_clientes[a].telefone, 9);
+		printf("\n\tCliente cadastrado!\n\tDigite o seu elogio/reclamação/sugestão: \n");
+		printf("\n\t_");
+		scanf(" %[^\n]s", clientes[a].sugestao);
+		printf("Sugestão salva com sucesso!!");
+		getchar();
+		
+	}
+	else if (i == 0)
+	{
+		system("cls");
+		printf("\nCliente não cadastrado!\n");
+		logar_cliente();
+	}
+}
+
+void cadastro_comandas(){
 
 }
 
@@ -364,22 +402,20 @@ erro_login:
 void login_usuario()
 {
 	int op_user;
-	int i = 0, cliente_cad = 0, x, y, nc;
+	int i = 0, user_cad = 0, x, y, nc;
 
 tela_inicial_user:
 	system("cls");
 	head();
-	puts("\t=================================\t=================================\t");
-	printf("\n\t1- Clientes\t\t\t\t5- Pizzaiolos\n");
-	puts("\t=================================\t=================================\t");
-	printf("\n\t2- Pedidos\t\t\t\t6- Promoções\n");
-	puts("\t=================================\t=================================\t");
-	printf("\n\t3- Sabores\t\t\t\t7- Estoque\n");
-	puts("\t=================================\t=================================\t");
-	printf("\n\t4- Bedidas\t\t\t\t8- Elogios/Reclamações\n");
-	puts("\t=================================\t=================================\t");
-	printf("\n\t0- Fechar\t\t\t\t9- Voltar a tela inicial de login\n");
-	puts("\t=================================\t=================================\t");
+	puts("\t=================================");
+	printf("\n\t1- Mesas\n");
+	puts("\t=================================");
+	printf("\n\t2- Pedidos\n");
+	puts("\t=================================");
+	printf("\n\t3- Promoções\n");
+	puts("\t=================================");
+	printf("\n\t9- Voltar a tela inicial de login\n");
+	puts("\t=================================");
 	printf("\t");
 	scanf("%d", &op_user);
 
@@ -388,7 +424,7 @@ tela_inicial_user:
 		system("cls");
 		head();
 		puts("\t=================================");
-		printf("\n\tQuantos cadastros deseja fazer? \n");
+		printf("\n\tQuantos comandas deseja fechar? \n");
 		puts("\t=================================");
 		printf("\t");
 		scanf("%d", &nc);
@@ -396,7 +432,7 @@ tela_inicial_user:
 		{
 			for (i = 0; i < nc; i++)
 			{
-				cadastro_clientes(i);
+				cadastro_comandas(i);
 			}
 			goto tela_inicial_user;
 		}
@@ -407,7 +443,7 @@ tela_inicial_user:
 			printf("\n%d\n", i);
 			for (i = x; i <= y; i++)
 			{
-				cadastro_clientes(i);
+				cadastro_comandas(i);
 			}
 			goto tela_inicial_user;
 		}
@@ -442,13 +478,92 @@ tela_inicial_user:
 	}
 	else if (op_user == 3) {}
 	else if (op_user == 4) {}
-	else if (op_user == 5) {}
-	else if (op_user == 6) {}
-	else if (op_user == 7) {}
-	else if (op_user == 8) {}
 	else if (op_user == 9) { system("cls"); menu_login_inicial(); }
 	else if (op_user == 0) exit(0);
 	else { system("cls"); printf("\n\tOpcao Invalida\n"); goto tela_inicial_user; }
+}
+
+void logar_cliente()
+{
+	int op_cliente;
+	int i = 0, cliente_cad = 0, x, y, nc;
+
+tela_inicial_cliente:
+	system("cls");
+	head();
+	puts("\t=================================");
+	printf("\n\t1- Cadastrar\n");
+	puts("\t=================================");
+	printf("\n\t2- Elogios/Relcamações\n");
+	puts("\t=================================");
+	printf("\n\t9- Voltar a tela inicial de login\n");
+	puts("\t=================================");
+	printf("\n\t0- Fechar\n");
+	puts("\t=================================");
+	printf("\t");
+	scanf("%d", &op_cliente);
+
+	if (op_cliente == 1)
+	{
+		system("cls");
+		head();
+		puts("\t=================================");
+		printf("\n\tQuantos cadastros deseja fazer? \n");
+		puts("\t=================================");
+		printf("\t");
+		scanf("%d", &nc);
+		if (i == 0)
+		{
+			for (i = 0; i < nc; i++)
+			{
+				cadastro_clientes(i);
+			}
+			goto tela_inicial_cliente;
+		}
+		else if (i != 0)
+		{
+			x = i;
+			y = i + nc - 1;
+			printf("\n%d\n", i);
+			for (i = x; i <= y; i++)
+			{
+				cadastro_clientes(i);
+			}
+			goto tela_inicial_cliente;
+		}
+	}
+	else if (op_cliente == 2) {
+		system("cls");
+		head();
+		puts("\t=================================");
+		printf("\n\tQuantas elogios/reclamações deseja fazer? \n");
+		puts("\t=================================");
+		printf("\t");
+		scanf("%d", &nc);
+		if (i == 0)
+		{
+			for (i = 0; i < nc; i++)
+			{
+				cadastro_sugestao(i);
+			}
+			goto tela_inicial_cliente;
+		}
+		else if (i != 0)
+		{
+			x = i;
+			y = i + nc - 1;
+			printf("\n%d\n", i);
+			for (i = x; i <= y; i++)
+			{
+				cadastro_sugestao(i);
+			}
+			goto tela_inicial_cliente;
+		}
+	}
+
+	else if (op_cliente == 9) { system("cls"); menu_login_inicial(); }
+	else if (op_cliente == 0) exit(0);
+	else { system("cls"); printf("\n\tOpcao Invalida\n"); goto tela_inicial_cliente; }
 }
 
 void logar_adm()
@@ -511,15 +626,15 @@ void login_adm()
 tela_inicial_adm:
 	system("cls");
 	head();
-	puts("\t=================================");
-	printf("\n\t1- Cadastro de usuarios\n");
-	puts("\t=================================");
-	printf("\n\t2- Cadastro de administradores\n");
-	puts("\t=================================");
-	printf("\n\t9- Voltar a tela de login\n");
-	puts("\t=================================");
-	printf("\n\t0- Fechar\n");
-	puts("\t=================================");
+	puts("\t=================================\t=================================");
+	printf("\n\t1- Cadastro de usuarios\t\t\t5- Alterar Cadastros\n");
+	puts("\t=================================\t=================================");
+	printf("\n\t2- Cadastro de administradores\t\t6- Promoções\n");
+	puts("\t=================================\t=================================");
+	printf("\n\t3- Cadastro de pizzaiolos\t\t7- Relatórios\n");
+	puts("\t=================================\t=================================");
+	printf("\n\t4- Controle de estoque\t\t\t9- Voltar a tela de login\n");
+	puts("\t=================================\t=================================");
 	printf("\t");
 	scanf("%d", &op_adm);
 	system("cls");
@@ -579,6 +694,66 @@ tela_inicial_adm:
 			goto tela_inicial_adm;
 		}
 	}
+	else if (op_adm == 3)
+	{
+		head();
+		puts("\t=================================");
+		printf("\n\tQuantos cadastros deseja fazer? \n");
+		puts("\t=================================");
+		printf("\t");
+		scanf("%d", &nc);
+		if (a == 0)
+		{
+			for (a = 0; a < nc; a++)
+			{
+				cadastro_users(a);
+			}
+			goto tela_inicial_adm;
+		}
+		else if (a != 0)
+		{
+			b = a;
+			c = a + nc - 1;
+			printf("\n%d\n", a);
+			for (a = b; a <= c; a++)
+			{
+				cadastro_users(a);
+			}
+			goto tela_inicial_adm;
+		}
+	}
+	else if (op_adm == 4) {
+		head();
+		puts("\t=================================");
+		printf("\n\tControle de estoque \n");
+		puts("\t=================================");
+		printf("\n\t1- ");
+		printf("\t");
+		scanf("%d", &nc);
+		if (a == 0)
+		{
+			for (a = 0; a < nc; a++)
+			{
+				cadastro_users(a);
+			}
+			goto tela_inicial_adm;
+		}
+		else if (a != 0)
+		{
+			b = a;
+			c = a + nc - 1;
+			printf("\n%d\n", a);
+			for (a = b; a <= c; a++)
+			{
+				cadastro_users(a);
+			}
+			goto tela_inicial_adm;
+		}
+	}
+	else if (op_adm == 5) {}
+	else if (op_adm == 6) {}
+	else if (op_adm == 7) {}
+	else if (op_adm == 8) {}
 	else if (op_adm == 0) exit(0);
 	else if (op_adm == 9) menu_login_inicial();
 }
@@ -594,11 +769,14 @@ menu_de_login:
 	puts("=================================");
 	printf("2- Login de USUARIO\n");
 	puts("=================================");
+	printf("3- Login de CLIENTE\n");
+	puts("=================================");
 	printf("0- FECHAR\n");
 	puts("=================================");
 	scanf(" %d", &op_login);
 	if (op_login == 1) logar_adm();
 	else if (op_login == 2) logar_usuario();
+	else if (op_login == 3) logar_cliente();
 	else if (op_login == 0) exit(0);
 	else
 	{
