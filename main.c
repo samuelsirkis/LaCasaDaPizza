@@ -4,6 +4,7 @@
 #include <locale.h>
 #include <string.h>
 #include <time.h>
+#include <Windows.h>
 
 #define conta_adm "root"
 #define senha_adm "root"
@@ -40,16 +41,14 @@ struct ingrediente {
 	char ingrediente[50];
 	int quantidade_ingredientes;
 	int codigo_ingrediente;
-	float preco_ingrediented;
-};
+	float preco_ingrediente;
+}ingredientes[20];
 
 struct pizza {
+	struct ingrediente pizza_ingreditente;
 	char sabor[30];
-	char ingredientes[50];
-	int tamanho_sabor;
-	int quantidade_sabor;
-	int codigo_sabor;
-	float preco_sabor;
+	int codigo_pizza;
+	float preco_pizza;
 }pizzas[50];
 
 struct cadastro {
@@ -66,6 +65,15 @@ struct pedido {
 	float valor_pedido;
 
 }pedido[1000], cadastro_pedido[1000];
+
+struct estoque{
+	struct ingrediente estoque_ingrediente;
+	struct bebida estoque_bebida;
+	int quantidade_produto;
+	char tipo_produto;
+	char nome_produto[50];
+	float preco_produto;
+}estoque[100],cad_estoque[100];
 
 int validar_login_usuario(int a, int c)
 {
@@ -307,8 +315,33 @@ bebida_existente:
 
 void cadastro_pizzas() {
 
-}
+	strcpy(pizzas[0].sabor, "mussarela");
+	strcpy(pizzas[1].sabor, "calabresa");
+	strcpy(pizzas[2].sabor, "portuguesa");
+	strcpy(pizzas[3].sabor, "quatro queijos");
+	strcpy(pizzas[4].sabor, "peperone");
+	strcpy(pizzas[5].sabor, "marguerita");
+	strcpy(pizzas[6].sabor, "peperone");
+	strcpy(pizzas[7].sabor, "bacon");
+	strcpy(pizzas[8].sabor, "cogumelo");
+	strcpy(pizzas[9].sabor, "banana");
+	strcpy(pizzas[10].sabor, "chocolate");
 
+	strcpy(pizzas[0].tamanho_pizza, "mussarela"), ;
+	strcpy(pizzas[1].sabor, "calabresa");
+	strcpy(pizzas[2].sabor, "portuguesa");
+	strcpy(pizzas[3].sabor, "quatro queijos");
+	strcpy(pizzas[4].sabor, "peperone");
+	strcpy(pizzas[5].sabor, "marguerita");
+	strcpy(pizzas[6].sabor, "peperone");
+	strcpy(pizzas[7].sabor, "bacon");
+	strcpy(pizzas[8].sabor, "cogumelo");
+	strcpy(pizzas[9].sabor, "banana");
+	strcpy(pizzas[10].sabor, "chocolate");
+}
+void controle_estoque() {
+
+}
 void cadastro_sugestao(int a){
 	int i, j;
 	system("cls");
@@ -320,7 +353,7 @@ sugestao_existe:
 	puts("\t=================================");
 	puts("\n\n\tDigite seu telefone: ");
 	printf("\t");
-	scanf(" %s", cad_clientes[a].telefone);
+	scanf("%s", cad_clientes[a].telefone);
 	for (j = 0; j < 1000; j++)
 	{
 		i = validar_cliente(a, j);
@@ -333,19 +366,23 @@ sugestao_existe:
 		printf("\n\t_");
 		scanf(" %[^\n]s", clientes[a].sugestao);
 		printf("Sugestão salva com sucesso!!");
-		getchar();
+		Sleep(5000);
 		
 	}
 	else if (i == 0)
 	{
 		system("cls");
 		printf("\nCliente não cadastrado!\n");
+		Sleep(5000);
 		logar_cliente();
 	}
 }
 
-void cadastro_comandas(){
-
+void cadastro_comandas(int a){
+	int i;
+	system("cls");
+	head();
+	printf("");
 }
 
 void logar_usuario()
@@ -727,8 +764,11 @@ tela_inicial_adm:
 		puts("\t=================================");
 		printf("\n\tControle de estoque \n");
 		puts("\t=================================");
-		printf("\n\t1- ");
-		printf("\t");
+		printf("\t|item\t|Produto\t|Tipo\t|Qtde\t|Preço\t|");
+		int i;
+		for (i = 0; i < estoque->quantidade_produto;i++) {
+			printf("\t|(%d)\t|%s\t|%s\t|%d\t|%f\t|", i+1,estoque->nome_produto,estoque->tipo_produto,estoque->quantidade_produto,estoque->preco_produto);
+		}
 		scanf("%d", &nc);
 		if (a == 0)
 		{
