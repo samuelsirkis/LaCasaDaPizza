@@ -35,7 +35,7 @@ struct bebida {
 	int codigo_bebiba;
 	float preco_bebida;
 
-}bebidas[200], cadastro_bebida[200];
+}bebidas[20], cadastro_bebida[20];
 
 struct ingrediente {
 	char ingrediente[50];
@@ -55,7 +55,7 @@ struct cadastro {
 	char user[20];
 	char pass[20];
 	int codigo;
-}usuario[1000], admin[50], cadastro_user[1000], cad_admin[50]; 
+}usuario[1000], admin[50], cadastro_user[1000], cad_admin[50];
 
 struct pedido {
 	struct cliente cliente_pedido;
@@ -66,14 +66,14 @@ struct pedido {
 
 }pedido[1000], cadastro_pedido[1000];
 
-struct estoque{
-	struct ingrediente estoque_ingrediente;
-	struct bebida estoque_bebida;
+struct estoque {
+	struct ingrediente estoque_ingrediente[20];
+	struct bebida estoque_bebida[10];
 	int quantidade_produto;
 	char tipo_produto;
 	char nome_produto[50];
 	float preco_produto;
-}estoque[100],cad_estoque[100];
+}estoque[100], cad_estoque[100];
 
 int validar_login_usuario(int a, int c)
 {
@@ -259,7 +259,7 @@ pedido_existente:
 		//criar menu com opções de pedido
 		//solicitar informações do pedido
 		//concluir pedido e informar valor total
-		
+
 
 	/*	puts("\tInforme a quantidade de sabores: ");
 		printf("\t");
@@ -277,72 +277,48 @@ pedido_existente:
 	}*/
 }
 
-void cadastro_bebidas(int a) {
-	int i, j;
-	system("cls");
-bebida_existente:
-	bebidas[a].codigo_bebiba = a + 1;
-	head();
-	puts("\t=================================");
-	printf("\n\tCadastro %d\n", bebidas[a].codigo_bebiba);
-	puts("\t=================================");
-	puts("\n\n\tDigite a bebida que deseja cadastrar: ");
-	printf("\t");
-	scanf(" %s", cadastro_bebida[a].bebida);
-	for (j = 0; j < 1000; j++)
-	{
-		i = validar_bebida(a, j);
-		if (i == 1) break;
-	}
-	if (i == 0)
-	{
-		memcpy(bebidas[a].bebida, cadastro_bebida[a].bebida, 20);
-		puts("\tInforme a quantidade de bebidas: ");
-		printf("\t");
-		scanf(" %d", cadastro_bebida[a].quantidade_bebida);
-		printf("\n\tQual o preço de venda da bebida: ");
-		printf("\t");
-		scanf(" %f", cadastro_bebida[a].preco_bebida);
-	}
+void cadastro_bebidas() {
+	strcpy(bebidas[0].bebida, "Água "), bebidas[0].preco_bebida = 1, 00, bebidas[0].quantidade_bebida = 100, bebidas[0].codigo_bebiba = 20;
+	strcpy(bebidas[1].bebida, "Coca-Cola"), bebidas[1].preco_bebida = 5, 00, bebidas[1].quantidade_bebida = 100, bebidas[1].codigo_bebiba = 21;
+	strcpy(bebidas[2].bebida, "Fanta"), bebidas[2].preco_bebida = 4, 00, bebidas[2].quantidade_bebida = 100, bebidas[2].codigo_bebiba = 22;
+	strcpy(bebidas[3].bebida, "Guarana"), bebidas[3].preco_bebida = 4, 00, bebidas[3].quantidade_bebida = 100, bebidas[3].codigo_bebiba = 23;
+	strcpy(bebidas[4].bebida, "Suco - Laranja"), bebidas[4].preco_bebida = 3, 00, bebidas[4].quantidade_bebida = 100, bebidas[4].codigo_bebiba = 24;
+	strcpy(bebidas[5].bebida, "Suco - Limão"), bebidas[5].preco_bebida = 3, 00, bebidas[5].quantidade_bebida = 100, bebidas[5].codigo_bebiba = 25;
+	strcpy(bebidas[6].bebida, "Água com gás"), bebidas[6].preco_bebida = 2, 00, bebidas[6].quantidade_bebida = 100, bebidas[6].codigo_bebiba = 26;
 
-	else if (i == 1)
-	{
-		system("cls");
-		printf("\nBebida ja existente!\n");
-		goto bebida_existente;
-	}
 }
 
 void cadastro_pizzas() {
 
-	strcpy(pizzas[0].sabor, "mussarela");
-	strcpy(pizzas[1].sabor, "calabresa");
-	strcpy(pizzas[2].sabor, "portuguesa");
-	strcpy(pizzas[3].sabor, "quatro queijos");
-	strcpy(pizzas[4].sabor, "peperone");
-	strcpy(pizzas[5].sabor, "marguerita");
-	strcpy(pizzas[6].sabor, "peperone");
-	strcpy(pizzas[7].sabor, "bacon");
-	strcpy(pizzas[8].sabor, "cogumelo");
-	strcpy(pizzas[9].sabor, "banana");
-	strcpy(pizzas[10].sabor, "chocolate");
+	strcpy(pizzas[0].sabor, "mussarela"), pizzas[0].preco_pizza = 10, 00;
+	strcpy(pizzas[1].sabor, "calabresa"), pizzas[1].preco_pizza = 10, 00;
+	strcpy(pizzas[2].sabor, "portuguesa"), pizzas[2].preco_pizza = 10, 00;
+	strcpy(pizzas[3].sabor, "quatro queijos"), pizzas[3].preco_pizza = 10, 00;
+	strcpy(pizzas[4].sabor, "peperone"), pizzas[4].preco_pizza = 10, 00;
+	strcpy(pizzas[5].sabor, "marguerita"), pizzas[5].preco_pizza = 10, 00;
+	strcpy(pizzas[6].sabor, "peperone"), pizzas[6].preco_pizza = 10, 00;
+	strcpy(pizzas[7].sabor, "bacon"), pizzas[7].preco_pizza = 10, 00;
+	strcpy(pizzas[8].sabor, "cogumelo"), pizzas[8].preco_pizza = 10, 00;
+	strcpy(pizzas[9].sabor, "banana"), pizzas[9].preco_pizza = 10, 00;
+	strcpy(pizzas[10].sabor, "chocolate"), pizzas[10].preco_pizza = 10, 00;
 
-	strcpy(pizzas[0].tamanho_pizza, "mussarela"), ;
-	strcpy(pizzas[1].sabor, "calabresa");
-	strcpy(pizzas[2].sabor, "portuguesa");
-	strcpy(pizzas[3].sabor, "quatro queijos");
-	strcpy(pizzas[4].sabor, "peperone");
-	strcpy(pizzas[5].sabor, "marguerita");
-	strcpy(pizzas[6].sabor, "peperone");
-	strcpy(pizzas[7].sabor, "bacon");
-	strcpy(pizzas[8].sabor, "cogumelo");
-	strcpy(pizzas[9].sabor, "banana");
-	strcpy(pizzas[10].sabor, "chocolate");
+	strcpy(pizzas[0].codigo_pizza, 1);
+	strcpy(pizzas[1].codigo_pizza, 2);
+	strcpy(pizzas[2].codigo_pizza, 3);
+	strcpy(pizzas[3].codigo_pizza, 4);
+	strcpy(pizzas[4].codigo_pizza, 5);
+	strcpy(pizzas[5].codigo_pizza, 6);
+	strcpy(pizzas[6].codigo_pizza, 7);
+	strcpy(pizzas[7].codigo_pizza, 8);
+	strcpy(pizzas[8].codigo_pizza, 9);
+	strcpy(pizzas[9].codigo_pizza, 10);
+	strcpy(pizzas[10].codigo_pizza, 11);
 }
+
 void controle_estoque() {
 
 }
-void cadastro_sugestao(int a){
+void cadastro_sugestao(int a) {
 	int i, j;
 	system("cls");
 sugestao_existe:
@@ -367,7 +343,7 @@ sugestao_existe:
 		scanf(" %[^\n]s", clientes[a].sugestao);
 		printf("Sugestão salva com sucesso!!");
 		Sleep(5000);
-		
+
 	}
 	else if (i == 0)
 	{
@@ -378,7 +354,7 @@ sugestao_existe:
 	}
 }
 
-void cadastro_comandas(int a){
+void cadastro_comandas(int a) {
 	int i;
 	system("cls");
 	head();
@@ -419,21 +395,21 @@ erro_login:
 
 		}
 	}
-		if (logado == 1)
-		{
-			system("cls");
-			printf("\nLogin e/ou senha incorreto(s)\n");
-			printf("\nTente Novamente!\n");
-			goto erro_login;
-		}
-		else if (logado == 2)
-		{
-			system("cls");
-			printf("\nLogado com sucesso!\n\nBem-vindo(a) %s\n", login[0]);
-			//printf("Codigo do usuario: %d\n\n", usuario[c].codigo);
-			login_usuario();
-		}
-	
+	if (logado == 1)
+	{
+		system("cls");
+		printf("\nLogin e/ou senha incorreto(s)\n");
+		printf("\nTente Novamente!\n");
+		goto erro_login;
+	}
+	else if (logado == 2)
+	{
+		system("cls");
+		printf("\nLogado com sucesso!\n\nBem-vindo(a) %s\n", login[0]);
+		//printf("Codigo do usuario: %d\n\n", usuario[c].codigo);
+		login_usuario();
+	}
+
 }
 
 void login_usuario()
@@ -485,7 +461,7 @@ tela_inicial_user:
 			goto tela_inicial_user;
 		}
 	}
-	else if(op_user ==2){
+	else if (op_user == 2) {
 		system("cls");
 		head();
 		puts("\t=================================");
@@ -761,13 +737,15 @@ tela_inicial_adm:
 	}
 	else if (op_adm == 4) {
 		head();
+		cadastro_bebidas();
 		puts("\t=================================");
-		printf("\n\tControle de estoque \n");
+		printf("\n\tControle de estoque Bebidas\n");
 		puts("\t=================================");
 		printf("\t|item\t|Produto\t|Tipo\t|Qtde\t|Preço\t|");
 		int i;
-		for (i = 0; i < estoque->quantidade_produto;i++) {
-			printf("\t|(%d)\t|%s\t|%s\t|%d\t|%f\t|", i+1,estoque->nome_produto,estoque->tipo_produto,estoque->quantidade_produto,estoque->preco_produto);
+		printf("%s",&estoque->estoque_bebida[0].bebida);
+		for (i = 0; i < 10; i++) {
+			printf("\t|(%d)\t|%s\t|%s\t|%d\t|%f\t|", i + 1, estoque->estoque_bebida[i].codigo_bebiba, estoque->estoque_bebida[i].bebida,estoque->estoque_bebida[i].quantidade_bebida,estoque->estoque_bebida[i].preco_bebida);
 		}
 		scanf("%d", &nc);
 		if (a == 0)
@@ -790,7 +768,12 @@ tela_inicial_adm:
 			goto tela_inicial_adm;
 		}
 	}
-	else if (op_adm == 5) {}
+	else if (op_adm == 5) {
+		head();
+		Sleep(5000);
+		goto tela_inicial_adm;
+
+	}
 	else if (op_adm == 6) {}
 	else if (op_adm == 7) {}
 	else if (op_adm == 8) {}
