@@ -16,6 +16,7 @@ void login_usuario();
 void dataHora();
 void logar_cliente();
 void menu_alterar_cadastro();
+void menu_estoque();
 
 
 struct cliente {
@@ -36,7 +37,7 @@ struct bebida {
 	int codigo_bebiba;
 	float preco_bebida;
 
-}bebidas[20], cadastro_bebida[20];
+}bebidas[19], cadastro_bebida[19];
 
 struct ingrediente {
 	char ingrediente[50];
@@ -257,6 +258,11 @@ pedido_existente:
 }
 
 void cadastro_bebidas() {
+	int i, cont = 0, op_bebida = 0, tam = sizeof(bebidas->bebida);;
+
+	for (i = 0; i < tam; i++) {
+		strcpy(bebidas[i].bebida, "NULL");
+	}
 	strcpy(bebidas[0].bebida, "Água\t"), bebidas[0].preco_bebida = 1.00, bebidas[0].quantidade_bebida = 100, bebidas[0].codigo_bebiba = 20;
 	strcpy(bebidas[1].bebida, "Coca-Cola"), bebidas[1].preco_bebida = 5.00, bebidas[1].quantidade_bebida = 100, bebidas[1].codigo_bebiba = 21;
 	strcpy(bebidas[2].bebida, "Fanta\t"), bebidas[2].preco_bebida = 4, 00, bebidas[2].quantidade_bebida = 100, bebidas[2].codigo_bebiba = 22;
@@ -264,17 +270,57 @@ void cadastro_bebidas() {
 	strcpy(bebidas[4].bebida, "Cerveja"), bebidas[4].preco_bebida = 3.00, bebidas[4].quantidade_bebida = 100, bebidas[4].codigo_bebiba = 24;
 	strcpy(bebidas[5].bebida, "Suco\t"), bebidas[5].preco_bebida = 3.00, bebidas[5].quantidade_bebida = 100, bebidas[5].codigo_bebiba = 25;
 	strcpy(bebidas[6].bebida, "Água com gás"), bebidas[6].preco_bebida = 2.00, bebidas[6].quantidade_bebida = 100, bebidas[6].codigo_bebiba = 26;
+cad_bebida:
+	system("cls");
+	head();
 	puts("\t=================================");
 	printf("\tControle de estoque Bebidas\n");
 	puts("\t=================================");
+	puts("\t_________________________________________________________");
 	printf("\t|item\t|Código\t|Produto\t|Tipo\t|Qtde\t|Preço\t|\n");
-	int i;
-
-	for (i = 0; i < 7; i++) {
-		printf("\t|(%d)\t|%d\t|%s\t|%s\t|%d\t|%.2f\t|\n", i + 1, bebidas[i].codigo_bebiba, bebidas[i].bebida, "Bebida", bebidas[i].quantidade_bebida, bebidas[i].preco_bebida);
+	for (i = 0; i < tam; i++) {
+		if (bebidas[i].codigo_bebiba != 0) {
+			printf("\t|(%d)\t|%d\t|%s\t|%s\t|%d\t|%.2f\t|\n", i + 1, bebidas[i].codigo_bebiba, bebidas[i].bebida, "Bebida", bebidas[i].quantidade_bebida, bebidas[i].preco_bebida);
+			cont++;
+		}
 	}
+	puts("\t_________________________________________________________");
+	printf("\n\n\t Digite 1 para alterar ou 2 para adicionar: ");
+	scanf("%d", &op_bebida);
+	printf("\n%d", cont);
+	if (op_bebida == 1) {
+		int a;
+		printf("Digite o nume do item a ser alterado:\n");
+		printf("\t");
+		scanf("%d", &a);
+		if (a <= cont) {
+			printf("\tDigite o novo nome da bebida: ");
+			scanf(" %[^\n]s", &bebidas[a - 1].bebida);
+			printf("\tDigite o novo código da bebida: ");
+			scanf("%d", &bebidas[a - 1].codigo_bebiba);
+			printf("\tDigite nova quantidade: ");
+			scanf("%d",&bebidas[a-1].quantidade_bebida);
+			printf("\tDigite o novo valor: ");
+			scanf("%f", &bebidas[a-1].preco_bebida);
+			goto cad_bebida;
+		}
+		printf("jdhdja");
+	}
+	else if (op_bebida == 2) {
+
+	}
+	else if (op_bebida == 9) menu_login_inicial();
+	else if (op_bebida == 0) exit(0);
+	else 
+	{
+		system("cls");
+		printf("Opcao invalida!\n");
+		goto cad_bebida;
+	}
+
 }
-//ok
+
+
 void cadastro_ingredientes() {
 	strcpy(ingredientes[0].ingrediente, "peperone"), ingredientes[0].quantidade_ingredientes = 100, ingredientes[0].codigo_ingrediente = 30;
 	strcpy(ingredientes[1].ingrediente, "queijo"), ingredientes[1].quantidade_ingredientes = 100, ingredientes[1].codigo_ingrediente = 31;
@@ -312,7 +358,6 @@ void cadastro_pizzas() {
 	strcpy(pizzas[10].codigo_pizza, 11);
 }
 //ok
-
 void cadastro_sugestao(int a) {
 	int i, j;
 	system("cls");
@@ -357,7 +402,7 @@ void cadastro_mesas(int a) {
 }
 
 void alterar_cadastro() {
-	
+
 }
 
 void logar_usuario()
@@ -706,8 +751,7 @@ tela_inicial_adm:
 			goto tela_inicial_adm;
 		}
 	}
-	else if (op_adm == 3)
-	{
+	else if (op_adm == 3) {
 		head();
 		puts("\t=================================");
 		printf("\n\tQuantos cadastros deseja fazer? \n");
@@ -735,36 +779,10 @@ tela_inicial_adm:
 		}
 	}
 	else if (op_adm == 4) {
-		head();
-		cadastro_bebidas();
-		
-		scanf("%d", &nc);
-		if (a == 0)
-		{
-			for (a = 0; a < nc; a++)
-			{
-				cadastro_users(a);
-			}
-			goto tela_inicial_adm;
-		}
-		else if (a != 0)
-		{
-			b = a;
-			c = a + nc - 1;
-			printf("\n%d\n", a);
-			for (a = b; a <= c; a++)
-			{
-				cadastro_users(a);
-			}
-			goto tela_inicial_adm;
-		}
+		menu_estoque();
 	}
 	else if (op_adm == 5) {
-		head();
-		//menu_alterar_cadastros();
-		Sleep(5000);
-		goto tela_inicial_adm;
-
+		menu_alterar_cadastro();
 	}
 	else if (op_adm == 6) {
 		head();
@@ -829,17 +847,64 @@ menu_cadastro_pedido:
 	}
 }
 
-//void menu_alterar_cadastros() {
-//	puts("\t=================================\t=================================");
-//	printf("\n\t1- Alterar cadastro de usuarios\n");
-//	puts("\t=================================\t=================================");
-//	printf("\n\t2- Alterar cadastro de administradores\n");
-//	puts("\t=================================\t=================================");
-//	printf("\n\t3- Cadastro de pizzaiolos\n");
-//	puts("\t=================================\t=================================");
-//	printf("\n\t9- Voltar a tela de login\n");
-//	puts("\t=================================\t=================================");
-//}
+void menu_estoque() {
+	int op_estoque;
+menu_de_estoque:
+	head();
+	puts("\t=================================");
+	printf("\n\t1- Estoque de Bebidas\n");
+	puts("\t=================================");
+	printf("\n\t2- Estoque de Igredientes\n");
+	puts("\t=================================");
+	printf("\n\t9- Voltar a tela de login\n");
+	puts("\t=================================");
+	printf("\n\t4- Controle de estoque\n");
+	puts("\t=================================");
+	printf("\t");
+	scanf(" %d", &op_estoque);
+	if (op_estoque == 1) cadastro_bebidas();
+	else if (op_estoque == 2) logar_usuario();
+	else if (op_estoque == 3) logar_cliente();
+	else if (op_estoque == 9) menu_login_inicial();
+	else if (op_estoque == 0) exit(0);
+	else
+	{
+		system("cls");
+		printf("Opcao invalida!\n");
+		goto menu_de_estoque;
+	}
+}
+
+void menu_alterar_cadastro() {
+	int op_cad;
+menu_de_cadastros:
+	head();
+	puts("\t=================================");
+	printf("\n\t1- Alterar usuarios\n");
+	puts("\t=================================");
+	printf("\n\t2- Alterar administradores\n");
+	puts("\t=================================");
+	printf("\n\t3- Alterar pizzaiolos\n");
+	puts("\t=================================");
+	printf("\n\t4- Alterar clientes\n");
+	puts("\t=================================");
+	printf("\n\t4- Alterar pizzas\n");
+	puts("\t=================================");
+	printf("\n\t9- Voltar a tela de login\n");
+	puts("\t=================================");
+	scanf(" %d", &op_cad);
+	if (op_cad == 1) logar_adm();
+	else if (op_cad == 2) logar_usuario();
+	else if (op_cad == 3) logar_cliente();
+	else if (op_cad == 9) menu_login_inicial();
+	else if (op_cad == 0) exit(0);
+	else
+	{
+		system("cls");
+		printf("Opcao invalida!\n");
+		goto menu_de_cadastros;
+	}
+}
 
 int main(void)
 {
