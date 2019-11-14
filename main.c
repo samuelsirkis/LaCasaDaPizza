@@ -17,7 +17,7 @@ void dataHora();
 void logar_cliente();
 void menu_alterar_cadastro();
 void menu_estoque();
-
+void gotoxy(coluna, linha);
 
 struct cliente {
 	char nome[100];
@@ -263,34 +263,34 @@ void cadastro_bebidas() {
 	for (i = 0; i < tam; i++) {
 		strcpy(bebidas[i].bebida, "NULL");
 	}
-	strcpy(bebidas[0].bebida, "Água\t"), bebidas[0].preco_bebida = 1.00, bebidas[0].quantidade_bebida = 100, bebidas[0].codigo_bebiba = 20;
+	strcpy(bebidas[0].bebida, "Água"), bebidas[0].preco_bebida = 1.00, bebidas[0].quantidade_bebida = 100, bebidas[0].codigo_bebiba = 20;
 	strcpy(bebidas[1].bebida, "Coca-Cola"), bebidas[1].preco_bebida = 5.00, bebidas[1].quantidade_bebida = 100, bebidas[1].codigo_bebiba = 21;
-	strcpy(bebidas[2].bebida, "Fanta\t"), bebidas[2].preco_bebida = 4, 00, bebidas[2].quantidade_bebida = 100, bebidas[2].codigo_bebiba = 22;
+	strcpy(bebidas[2].bebida, "Fanta"), bebidas[2].preco_bebida = 4, 00, bebidas[2].quantidade_bebida = 100, bebidas[2].codigo_bebiba = 22;
 	strcpy(bebidas[3].bebida, "Guarana"), bebidas[3].preco_bebida = 4.00, bebidas[3].quantidade_bebida = 100, bebidas[3].codigo_bebiba = 23;
 	strcpy(bebidas[4].bebida, "Cerveja"), bebidas[4].preco_bebida = 3.00, bebidas[4].quantidade_bebida = 100, bebidas[4].codigo_bebiba = 24;
-	strcpy(bebidas[5].bebida, "Suco\t"), bebidas[5].preco_bebida = 3.00, bebidas[5].quantidade_bebida = 100, bebidas[5].codigo_bebiba = 25;
-	strcpy(bebidas[6].bebida, "Água com gás"), bebidas[6].preco_bebida = 2.00, bebidas[6].quantidade_bebida = 100, bebidas[6].codigo_bebiba = 26;
+	strcpy(bebidas[5].bebida, "Suco"), bebidas[5].preco_bebida = 3.00, bebidas[5].quantidade_bebida = 100, bebidas[5].codigo_bebiba = 25;
+	strcpy(bebidas[6].bebida, "Sprit"), bebidas[6].preco_bebida = 2.00, bebidas[6].quantidade_bebida = 100, bebidas[6].codigo_bebiba = 26;
 cad_bebida:
 	system("cls");
 	head();
 	puts("\t=================================");
 	printf("\tControle de estoque Bebidas\n");
 	puts("\t=================================");
-	puts("\t_________________________________________________________");
-	printf("\t|item\t|Código\t|Produto\t|Tipo\t|Qtde\t|Preço\t|\n");
+	gotoxy(8,13);puts("_________________________________________________________");
+	gotoxy(8, 14);puts("|item\t|Código\t|Produto\t|Tipo\t|Qtde\t|Preço\t|\n");
 	for (i = 0; i < tam; i++) {
 		if (bebidas[i].codigo_bebiba != 0) {
-			printf("\t|(%d)\t|%d\t|%s\t|%s\t|%d\t|%.2f\t|\n", i + 1, bebidas[i].codigo_bebiba, bebidas[i].bebida, "Bebida", bebidas[i].quantidade_bebida, bebidas[i].preco_bebida);
+			gotoxy(printf("\t|(%d)\t|%d\t|%s\t|%s\t|%d\t|%.2f\t|\n", i + 1, bebidas[i].codigo_bebiba, bebidas[i].bebida, "Bebida", bebidas[i].quantidade_bebida, bebidas[i].preco_bebida);
 			cont++;
 		}
 	}
 	puts("\t_________________________________________________________");
 	printf("\n\n\t Digite 1 para alterar ou 2 para adicionar: ");
 	scanf("%d", &op_bebida);
-	printf("\n%d", cont);
+
 	if (op_bebida == 1) {
 		int a;
-		printf("Digite o nume do item a ser alterado:\n");
+		printf("\tDigite o nume do item a ser alterado:\n");
 		printf("\t");
 		scanf("%d", &a);
 		if (a <= cont) {
@@ -299,19 +299,29 @@ cad_bebida:
 			printf("\tDigite o novo código da bebida: ");
 			scanf("%d", &bebidas[a - 1].codigo_bebiba);
 			printf("\tDigite nova quantidade: ");
-			scanf("%d",&bebidas[a-1].quantidade_bebida);
+			scanf("%d", &bebidas[a - 1].quantidade_bebida);
 			printf("\tDigite o novo valor: ");
-			scanf("%f", &bebidas[a-1].preco_bebida);
+			scanf("%f", &bebidas[a - 1].preco_bebida);
 			goto cad_bebida;
 		}
 		printf("jdhdja");
 	}
 	else if (op_bebida == 2) {
 
+		printf("\tDigite a nova bebida: ");
+		scanf(" %[^\n]s", &bebidas[cont - 1].bebida);
+		printf("\tDigite o código da bebida: ");
+		scanf("%d", &bebidas[cont - 1].codigo_bebiba);
+		printf("\tDigite quantidade: ");
+		scanf("%d", &bebidas[cont - 1].quantidade_bebida);
+		printf("\tDigite o valor: ");
+		scanf("%f", &bebidas[cont - 1].preco_bebida);
+		goto cad_bebida;
+
 	}
 	else if (op_bebida == 9) menu_login_inicial();
 	else if (op_bebida == 0) exit(0);
-	else 
+	else
 	{
 		system("cls");
 		printf("Opcao invalida!\n");
@@ -935,4 +945,11 @@ void dataHora() {
 	printf("%d:", data_hora_atual->tm_min);
 	printf("%d\n", data_hora_atual->tm_sec);
 
+}
+
+void gotoxy(int coluna, int linha) {
+	COORD point;
+	point.X = coluna;
+	point.Y = linha;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 }
