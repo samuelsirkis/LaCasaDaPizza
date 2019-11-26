@@ -1103,14 +1103,14 @@ mesa:
 		}
 	}
 fechar_mesa:
-	gotoxy(89, 28); printf("R$ %.2f", valor);
+	gotoxy(89, 28); printf("R$ %.2f", valor + valor * 0, 1);
 	goto opcao;
 }
 
 void menu_pedido(int np, int nc) {
 	int i=0,j, a, codPedido[10], tamC = sizeof(clientes->nome), tamP = sizeof(pizzas->sabor),tamB = sizeof(bebidas->bebida);
 	char op;
-	float valor_pedido=0;
+	float valor_pedido=0, taxa_entrega=5.00;
 	fflush(stdin);
 pedido:
 	head();
@@ -1207,7 +1207,7 @@ pedido_entra:
 		}
 	}
 fechar_pedido:
-	gotoxy(89, 30); printf("R$ %.2f", valor_pedido);
+	gotoxy(89, 30); printf("R$ %.2f", valor_pedido = taxa_entrega);
 	goto opcao;
 	scanf("%d", &op);
 	if (op == 1){ }
