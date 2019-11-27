@@ -9,7 +9,7 @@
 #define conta_adm "root"
 #define senha_adm "root"
 
-void head(); void login_adm(); void menu_login_inicial(); void menu_estoque(); void menu_mesa(a);
+void head(); void login_adm(); void menu_login_inicial(); void menu_estoque(); void menu_mesa(nm);
 void menu_pedido(a); void login_usuario(); void dataHora(); void logar_cliente();
 void gotoxy(coluna, linha); void logar_adm(); void alterar_cadastro(a);
 void cadastro_pizzas(); void cadastro_bebidas(); void estoque_bebida();
@@ -69,6 +69,21 @@ struct mesa {
 	int codigo_mesa;
 	double valor_mesa;
 }mesas[30], cad_mesa[30];
+
+struct promocao {
+	int idPromocao;
+
+}promocao[100], cadPromocao[100];
+
+struct relatorio {
+	int idRelatorio;
+	struct bebida rBebida;
+	struct pizza rPiz;
+	struct ingrediente rIng;
+	struct cliente rCli;
+	struct promocao rPro;
+
+}relatorios[100];
 
 int validar_login_usuario(int a, int c) {
 	int r;
@@ -358,48 +373,6 @@ tela_cliente:
 	else { printf("Opcao invalida!\n"); goto tela_cliente; }
 }
 //ok
-void cadastro_pedidos(int a) {
-	/*int i, j;
-	system("cls");
-pedido_existente:
-	pedido[a].codigo_pedido = a + 1;
-	head();
-	puts("\t=================================");
-	printf("\n\tCadastro de pedido n.º: %d\n", pedido[a].codigo_pedido);
-	puts("\t=================================");
-	puts("\n\n\tDigite o número de telefone do cliente: ");
-	printf("\t");
-	scanf(" %s", cadastro_pedido[a].cliente_pedido.telefone);
-	for (j = 0; j < 1000; j++)
-	{
-		i = validar_cliente(a, j);
-		if (i == 0) break;
-	}
-	if (i == 0)
-	{
-		memcpy(pedido[a].cliente_pedido.telefone, cadastro_pedido[a].cliente_pedido.telefone, 9);*/
-		//tentar imprimir o cadastro do cliente na tela
-		//criar menu com opções de pedido
-		//solicitar informações do pedido
-		//concluir pedido e informar valor total
-
-
-	/*	puts("\tInforme a quantidade de sabores: ");
-		printf("\t");
-		scanf(" %d", cadastro_pedido[a].cliente_sabor.sabor);
-		printf("\n\tQuais sabores: ");
-		printf("\t");
-		scanf(" %d", cadastro_pedido[a].cliente_bebida.bebida);
-	}
-
-	else if (i == 1)
-	{
-		system("cls");
-		printf("\nBebida ja existente!\n");
-		goto pedido_existente;
-	}*/
-}
-
 void cadastro_bebidas() {
 	strcpy(bebidas[0].bebida, "Água"), bebidas[0].preco_bebida = 1.00, bebidas[0].quantidade_bebida = 100, bebidas[0].codigo_bebiba = 20;
 	strcpy(bebidas[1].bebida, "Coca-Cola"), bebidas[1].preco_bebida = 5.00, bebidas[1].quantidade_bebida = 100, bebidas[1].codigo_bebiba = 21;
@@ -422,10 +395,10 @@ void cadastro_ingredientes() {
 //ok
 void cadastro_pizzas() {
 	strcpy(pizzas[0].sabor, "mussarela"), pizzas[0].preco_pizza = 11, 99, strcpy(pizzas[0].pizza_ingreditente.ingrediente, "Queijo"),
-		pizzas[0].codigo_pizza = 1, pizzas[0].qdt_ing = 5; 
-	strcpy(pizzas[1].sabor, "calabresa"), pizzas[1].preco_pizza = 12.99, strcpy(pizzas[1].pizza_ingreditente.ingrediente, "Queijo"), 
+		pizzas[0].codigo_pizza = 1, pizzas[0].qdt_ing = 5;
+	strcpy(pizzas[1].sabor, "calabresa"), pizzas[1].preco_pizza = 12.99, strcpy(pizzas[1].pizza_ingreditente.ingrediente, "Queijo"),
 		pizzas[1].codigo_pizza = 2, pizzas[1].qdt_ing = 5,
-	strcpy(pizzas[2].sabor, "portuguesa"), pizzas[2].preco_pizza = 12.99, strcpy(pizzas[2].pizza_ingreditente.ingrediente, "Queijo"),
+		strcpy(pizzas[2].sabor, "portuguesa"), pizzas[2].preco_pizza = 12.99, strcpy(pizzas[2].pizza_ingreditente.ingrediente, "Queijo"),
 		pizzas[2].codigo_pizza = 3, pizzas[2].qdt_ing = 5;
 	strcpy(pizzas[3].sabor, "quatro queijos"), pizzas[3].preco_pizza = 15.99, strcpy(pizzas[3].pizza_ingreditente.ingrediente, "Queijo"),
 		pizzas[3].codigo_pizza = 4, pizzas[3].qdt_ing = 5;
@@ -476,6 +449,25 @@ void cadastro_sugestao(int a) {
 	}
 }
 //ok
+void cadastro_promo() {
+	char op;
+tela_promo:
+	system("cls");
+	head();
+	puts("\tQual tipo de promoção P para pizza e B para bebida: ");
+	puts("\t");
+	scanf("%c", &op);
+	if (op == 'P' || op == 'p') {
+		
+	}
+	else if (op == 'B' || op == 'b') {
+
+	}
+	else if (op == '0') exit(0);
+	else if (op == '9') menu_login_inicial();
+	else { system("cls"); printf("\n\tOpcao Invalida\n"); goto tela_promo; }
+}
+
 void alterar_cadastro(int a, int b) {
 	int op_cad, cont = 0;
 tela_cadastro:
@@ -546,7 +538,7 @@ erro_login:
 //ok
 void login_usuario()
 {
-	int op_user, i = 0, nc=0, user_cad = 0, nm, np=1,r=0;
+	int op_user, i = 0, nc = 0, user_cad = 0, nm, np = 1, r = 0;
 
 tela_inicial_user:
 	system("cls");
@@ -597,7 +589,7 @@ tela_inicial_user:
 			Sleep(1000);
 			goto tela_inicial_user;
 		}
-		
+
 	}
 	else if (op_user == 3) {}
 	else if (op_user == 4) {}
@@ -836,6 +828,7 @@ tela_inicial_adm:
 		alterar_cadastro(a, adm_cad);
 	}
 	else if (op_adm == 6) {
+
 		head();
 		Sleep(5000);
 		goto tela_inicial_adm;
@@ -1103,14 +1096,14 @@ mesa:
 		}
 	}
 fechar_mesa:
-	gotoxy(89, 28); printf("R$ %.2f", valor + valor * 0, 1);
+	gotoxy(89, 28); printf("R$ %.2f", valor + valor * 0.1);
 	goto opcao;
 }
 
 void menu_pedido(int np, int nc) {
-	int i=0,j, a, codPedido[10], tamC = sizeof(clientes->nome), tamP = sizeof(pizzas->sabor),tamB = sizeof(bebidas->bebida);
+	int i = 0, j, a, codPedido[10], tamC = sizeof(clientes->nome), tamP = sizeof(pizzas->sabor), tamB = sizeof(bebidas->bebida);
 	char op;
-	float valor_pedido=0, taxa_entrega=5.00;
+	double valor_pedido = 0, taxa_entrega = 5.00;
 	fflush(stdin);
 pedido:
 	head();
@@ -1133,7 +1126,7 @@ pedido:
 			gotoxy(104, 15); printf("|%s", clientes[i].cep);
 			gotoxy(114, 15); printf("|");
 		}
-	}	
+	}
 	gotoxy(6, 16); puts("|-----|-------------------|----------|----------------------------|---------------|---------------|---------|");
 	gotoxy(6, 17); puts("|-----------------------------------------------------------------------------------------------------------|");
 	gotoxy(6, 18); puts("| PIZZAS PEDIDO");
@@ -1209,8 +1202,8 @@ pedido_entra:
 fechar_pedido:
 	gotoxy(89, 30); printf("R$ %.2f", valor_pedido = taxa_entrega);
 	goto opcao;
-	scanf("%d", &op);
-	if (op == 1){ }
+	scanf("%c", &op);
+	if (op == 1) {}
 	else if (op == '9') { system("cls"); login_usuario(); }
 	else if (op == '0') { exit(0); }
 	else { system("cls"); printf("\n\tOpcao Invalida\n"); goto pedido; }
